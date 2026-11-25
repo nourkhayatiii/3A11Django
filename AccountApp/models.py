@@ -12,9 +12,12 @@ class User(AbstractUser):
 class Specialty(models.Model):
     name = models.CharField(max_length=100)
 
+    class Meta:
+        verbose_name = 'Specialty'
+        verbose_name_plural = 'Specialties'
+
     def __str__(self):
         return self.name
-
 
 phone_validator = RegexValidator(
     regex=r"^\d{8}$",
@@ -31,6 +34,10 @@ class Doctor(User):
         max_length=8, validators=[phone_validator]
     )
     specialties = models.ManyToManyField(Specialty)
+
+    class Meta:
+        verbose_name = 'Doctor'
+        verbose_name_plural = 'Doctors'
 
     def __str__(self):
         return self.get_full_name() or self.username
@@ -56,6 +63,10 @@ class Patient(User):
     birth_date = models.DateField(
         validators=[validate_past_date]
     )
+
+    class Meta:
+        verbose_name = 'Patient'
+        verbose_name_plural = 'Patients'
 
     def __str__(self):
         return self.get_full_name() or self.username
